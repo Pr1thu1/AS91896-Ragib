@@ -70,5 +70,36 @@ bc.bind("<Enter>",    lambda e: draw_btn("#a8d8f0"))
 bc.bind("<Leave>",    lambda e: draw_btn("#C8EDF7"))
 bc.bind("<Button-1>", lambda e: [draw_btn("#7bbedd"), root.after(150, lambda: draw_btn("#a8d8f0"))])
 
+
+bc = tk.Canvas(root, width=40, height=40, bg="#ffffff", highlightthickness=0, cursor="hand2")
+bc.place(relx=0.05, rely=0.1, anchor="center")
+
+def draw_btn(color):
+    bc.delete("all")
+    rounded(bc, 40, 40, 20, color)
+    bc.create_text(20, 20, text="X", font=("Arial", 20, "bold"), fill="#166C99")
+
+draw_btn("#C8EDF7")
+bc.bind("<Enter>",    lambda e: draw_btn("#a8d8f0"))
+bc.bind("<Leave>",    lambda e: draw_btn("#C8EDF7"))
+bc.bind("<Button-1>", lambda e: [draw_btn("#7bbedd"), root.after(150, lambda: draw_btn("#a8d8f0"))])
+
+# Exit the quiz button
+bc = tk.Canvas(root, width=40, height=40, bg="#ffffff", highlightthickness=0, cursor="hand2")
+bc.place(relx=0.05, rely=0.1, anchor="center")
+
+def draw_btn(color):
+    bc.delete("all")
+    rounded(bc, 40, 40, 20, color)
+    bc.create_text(20, 20, text="X", font=("Arial", 20, "bold"), fill="#166C99")
+
+draw_btn("#C8EDF7")
+bc.bind("<Enter>",    lambda e: draw_btn("#a8d8f0"))
+bc.bind("<Leave>",    lambda e: draw_btn("#C8EDF7"))
+bc.bind("<Button-1>", lambda e: [
+    draw_btn("#7bbedd"),
+    root.after(150, lambda: [draw_btn("#a8d8f0"), root.destroy()])
+])
+
 # Loop program
 root.mainloop()
