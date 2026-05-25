@@ -16,7 +16,7 @@ w = root.winfo_screenwidth()
 h = root.winfo_screenheight()
 
 # Loading and fitting the background image
-img = Image.open("background2.png")
+img = Image.open("intro.png")
 iw, ih = img.size
 scale = max(w / iw, h / ih)
 img = img.resize((int(iw * scale), int(ih * scale)), Image.BICUBIC)
