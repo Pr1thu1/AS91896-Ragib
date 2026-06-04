@@ -16,7 +16,7 @@ w = root.winfo_screenwidth()
 h = root.winfo_screenheight()
 
 # Loading and fitting the background image
-img = Image.open("inst.png")
+img = Image.open("../../Imgs/intro.png")
 iw, ih = img.size
 scale = max(w / iw, h / ih)
 img = img.resize((int(iw * scale), int(ih * scale)), Image.BICUBIC)
@@ -35,6 +35,9 @@ elif platform.system() == "Windows":
 else:
     font = "DejaVu Sans"
 
+# "Please Enter Your Name" label
+tk.Label(root, text="Please Enter Your Name:", font=(font, 20, "bold"),
+         fg="#1a5276", bg="#ffffff").place(relx=0.5, rely=0.76, anchor="center")
 
 # Drawing rounded rectangles for the entry box and button
 def rounded(canvas, w, h, r, color):
@@ -44,14 +47,37 @@ def rounded(canvas, w, h, r, color):
     canvas.create_rectangle(r, 0, w-r, h, fill=color, outline=color)
     canvas.create_rectangle(0, r, w, h-r, fill=color, outline=color)
 
+# Name entry box
+ec = tk.Canvas(root, width=400, height=58, bg="#ffffff", highlightthickness=0)
+ec.place(relx=0.5, rely=0.83, anchor="center")
+rounded(ec, 400, 58, 20, "#C8EDF7")
+
+name_entry = tk.Entry(root, font=("Arial", 22), justify="center",
+                      bg="#C8EDF7", fg="#1a5276", bd=0, highlightthickness=0)
+name_entry.place(relx=0.5, rely=0.83, width=370, height=48, anchor="center")
+
 # Play button with hover and click effects
-bc = tk.Canvas(root, width=120, height=60, bg="#C8EDF7", highlightthickness=0, cursor="hand2")
+bc = tk.Canvas(root, width=80, height=60, bg="#ffffff", highlightthickness=0, cursor="hand2")
 bc.place(relx=0.5, rely=0.93, anchor="center")
 
 def draw_btn(color):
     bc.delete("all")
-    rounded(bc, 120, 60, 20, color)
-    bc.create_text(60, 30, text="START", font=("Comic Sans MS", 26, "bold"), fill="#166C99")
+    rounded(bc, 80, 60, 20, color)
+    bc.create_text(40, 30, text="▶", font=("Arial", 26, "bold"), fill="white")
+
+draw_btn("#C8EDF7")
+bc.bind("<Enter>",    lambda e: draw_btn("#a8d8f0"))
+bc.bind("<Leave>",    lambda e: draw_btn("#C8EDF7"))
+bc.bind("<Button-1>", lambda e: [draw_btn("#7bbedd"), root.after(150, lambda: draw_btn("#a8d8f0"))])
+
+
+bc = tk.Canvas(root, width=40, height=40, bg="#ffffff", highlightthickness=0, cursor="hand2")
+bc.place(relx=0.05, rely=0.1, anchor="center")
+
+def draw_btn(color):
+    bc.delete("all")
+    rounded(bc, 40, 40, 20, color)
+    bc.create_text(20, 20, text="X", font=("Arial", 20, "bold"), fill="#166C99")
 
 draw_btn("#C8EDF7")
 bc.bind("<Enter>",    lambda e: draw_btn("#a8d8f0"))
@@ -59,7 +85,7 @@ bc.bind("<Leave>",    lambda e: draw_btn("#C8EDF7"))
 bc.bind("<Button-1>", lambda e: [draw_btn("#7bbedd"), root.after(150, lambda: draw_btn("#a8d8f0"))])
 
 # Exit the quiz button
-bc = tk.Canvas(root, width=40, height=40, bg="#C9EDF7", highlightthickness=0, cursor="hand2")
+bc = tk.Canvas(root, width=40, height=40, bg="#ffffff", highlightthickness=0, cursor="hand2")
 bc.place(relx=0.05, rely=0.1, anchor="center")
 
 def draw_btn(color):
@@ -74,7 +100,6 @@ bc.bind("<Button-1>", lambda e: [
     draw_btn("#7bbedd"),
     root.after(150, lambda: [draw_btn("#a8d8f0"), root.destroy()])
 ])
-
 
 # Loop program
 root.mainloop()
