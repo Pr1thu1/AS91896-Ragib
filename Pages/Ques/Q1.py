@@ -33,7 +33,7 @@ blue_click = "#0f4566"
 
 # Answers
 answer1 = "Pizza"
-answer2 = "Lahmachun"
+answer2 = "Lahmajun"
 answer3 = "Banitsa"
 answer4 = "Khichuri"
 
