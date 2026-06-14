@@ -16,7 +16,7 @@ w = root.winfo_screenwidth()
 h = root.winfo_screenheight()
 
 # Loading and fitting the background image
-img = Image.open("../../Imgs/ques10.png")
+img = Image.open("../../Imgs/ques12.png")
 iw, ih = img.size
 scale = max(w / iw, h / ih)
 img = img.resize((int(iw * scale), int(ih * scale)), Image.BICUBIC)
@@ -32,10 +32,10 @@ blue_dark = "#155d87"
 blue_click = "#0f4566"
 
 # Answers
-answer1 = "China"
-answer2 = "Vietnam"
-answer3 = "Philippines"
-answer4 = "Japan"
+answer1 = "Chaat"
+answer2 = "Piragi"
+answer3 = "Fuchka"
+answer4 = "Sashimi"
 
 
 # Option 1
