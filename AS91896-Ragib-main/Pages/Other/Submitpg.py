@@ -31,12 +31,19 @@ blue = "#1a6fa0"
 blue_dark = "#155d87"
 blue_click = "#0f4566"
 
-# Option 1
+# Submit button - opens score page
 btn1 = tk.Label(root, text=" Submit ", font=("Comic Sans MS", 26), fg="white", bg=blue, width=7, height=2, anchor="w", cursor="hand2", bd=0, relief="flat")
 btn1.place(relx=0.50, rely=0.75, anchor="center")
 btn1.bind("<Enter>", lambda e: btn1.config(bg=blue_dark))
 btn1.bind("<Leave>", lambda e: btn1.config(bg=blue))
-btn1.bind("<Button-1>", lambda e: btn1.config(bg=blue_click))
+
+def go_to_score():
+    btn1.config(bg=blue_click)
+    import subprocess, sys, os
+    subprocess.Popen([sys.executable, os.path.join(os.path.dirname(__file__), "Scorepg.py")])
+    root.destroy()
+
+btn1.bind("<Button-1>", lambda e: go_to_score())
 
 # Loop program
 root.mainloop()

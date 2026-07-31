@@ -16,7 +16,7 @@ w = root.winfo_screenwidth()
 h = root.winfo_screenheight()
 
 # Loading and fitting the background image
-img = Image.open("../../Imgs/ques12.png")
+img = Image.open("../../Imgs/ques10.png")
 iw, ih = img.size
 scale = max(w / iw, h / ih)
 img = img.resize((int(iw * scale), int(ih * scale)), Image.BICUBIC)
@@ -32,39 +32,59 @@ blue_dark = "#155d87"
 blue_click = "#0f4566"
 
 # Answers
-answer1 = "Chaat"
-answer2 = "Piragi"
-answer3 = "Fuchka"
-answer4 = "Sashimi"
+answer1 = "China"
+answer2 = "Vietnam"
+answer3 = "Philippines"
+answer4 = "Japan"
 
+
+correct_answer = "Japan"
+
+# Read current score from file
+def get_score():
+    with open("../../score.txt", "r") as f:
+        return int(f.read())
+
+# Save updated score to file
+def save_score(score):
+    with open("../../score.txt", "w") as f:
+        f.write(str(score))
+
+# Runs when any answer button is clicked
+def answer_clicked(chosen):
+    if chosen == correct_answer:
+        save_score(get_score() + 1)
+    import subprocess, sys, os
+    subprocess.Popen([sys.executable, os.path.join(os.path.dirname(__file__), "Q11.py")])
+    root.destroy()
 
 # Option 1
 btn1 = tk.Label(root, text="  " + answer1, font=("Arial", 26), fg="white", bg=blue, width=14, height=2, anchor="w", cursor="hand2", bd=0, relief="flat")
 btn1.place(relx=0.16, rely=0.67, anchor="center")
 btn1.bind("<Enter>", lambda e: btn1.config(bg=blue_dark))
 btn1.bind("<Leave>", lambda e: btn1.config(bg=blue))
-btn1.bind("<Button-1>", lambda e: btn1.config(bg=blue_click))
+btn1.bind("<Button-1>", lambda e: [btn1.config(bg=blue_click), root.after(150, lambda: answer_clicked(answer1))])
 
 # Option 2
 btn2 = tk.Label(root, text="  " + answer2, font=("Arial", 26), fg="white", bg=blue, width=14, height=2, anchor="w", cursor="hand2", bd=0, relief="flat")
 btn2.place(relx=0.41, rely=0.67, anchor="center")
 btn2.bind("<Enter>", lambda e: btn2.config(bg=blue_dark))
 btn2.bind("<Leave>", lambda e: btn2.config(bg=blue))
-btn2.bind("<Button-1>", lambda e: btn2.config(bg=blue_click))
+btn2.bind("<Button-1>", lambda e: [btn2.config(bg=blue_click), root.after(150, lambda: answer_clicked(answer2))])
 
 # Option 3
 btn3 = tk.Label(root, text="  " + answer3, font=("Arial", 26), fg="white", bg=blue, width=14, height=2, anchor="w", cursor="hand2", bd=0, relief="flat")
 btn3.place(relx=0.16, rely=0.82, anchor="center")
 btn3.bind("<Enter>", lambda e: btn3.config(bg=blue_dark))
 btn3.bind("<Leave>", lambda e: btn3.config(bg=blue))
-btn3.bind("<Button-1>", lambda e: btn3.config(bg=blue_click))
+btn3.bind("<Button-1>", lambda e: [btn3.config(bg=blue_click), root.after(150, lambda: answer_clicked(answer3))])
 
 # Option 4
 btn4 = tk.Label(root, text="  " + answer4, font=("Arial", 26), fg="white", bg=blue, width=14, height=2, anchor="w", cursor="hand2", bd=0, relief="flat")
 btn4.place(relx=0.41, rely=0.82, anchor="center")
 btn4.bind("<Enter>", lambda e: btn4.config(bg=blue_dark))
 btn4.bind("<Leave>", lambda e: btn4.config(bg=blue))
-btn4.bind("<Button-1>", lambda e: btn4.config(bg=blue_click))
+btn4.bind("<Button-1>", lambda e: [btn4.config(bg=blue_click), root.after(150, lambda: answer_clicked(answer4))])
 
 # Loop program
 root.mainloop()

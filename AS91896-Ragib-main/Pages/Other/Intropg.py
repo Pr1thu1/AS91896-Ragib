@@ -11,6 +11,10 @@ root.after(100, lambda: root.attributes('-topmost', False))
 root.attributes('-fullscreen', True)
 root.bind('<Escape>', lambda e: root.attributes('-fullscreen', False))
 
+# Reset score to 0 when quiz starts
+with open("../../score.txt", "w") as f:
+    f.write("0")
+
 # Getting screen size
 w = root.winfo_screenwidth()
 h = root.winfo_screenheight()
@@ -56,49 +60,42 @@ name_entry = tk.Entry(root, font=("Arial", 22), justify="center",
                       bg="#C8EDF7", fg="#1a5276", bd=0, highlightthickness=0)
 name_entry.place(relx=0.5, rely=0.83, width=370, height=48, anchor="center")
 
-# Play button with hover and click effects
+# Play button - opens instructions page
 bc = tk.Canvas(root, width=80, height=60, bg="#ffffff", highlightthickness=0, cursor="hand2")
 bc.place(relx=0.5, rely=0.93, anchor="center")
 
-def draw_btn(color):
+def draw_play_btn(color):
     bc.delete("all")
     rounded(bc, 80, 60, 20, color)
     bc.create_text(40, 30, text="▶", font=("Arial", 26, "bold"), fill="white")
 
-draw_btn("#C8EDF7")
-bc.bind("<Enter>",    lambda e: draw_btn("#a8d8f0"))
-bc.bind("<Leave>",    lambda e: draw_btn("#C8EDF7"))
-bc.bind("<Button-1>", lambda e: [draw_btn("#7bbedd"), root.after(150, lambda: draw_btn("#a8d8f0"))])
+draw_play_btn("#C8EDF7")
+bc.bind("<Enter>",    lambda e: draw_play_btn("#a8d8f0"))
+bc.bind("<Leave>",    lambda e: draw_play_btn("#C8EDF7"))
 
+def go_to_instructions():
+    draw_play_btn("#a8d8f0")
+    import subprocess, sys, os
+    subprocess.Popen([sys.executable, os.path.join(os.path.dirname(__file__), "Instpg.py")])
+    root.destroy()
 
-bc = tk.Canvas(root, width=40, height=40, bg="#ffffff", highlightthickness=0, cursor="hand2")
-bc.place(relx=0.05, rely=0.1, anchor="center")
-
-def draw_btn(color):
-    bc.delete("all")
-    rounded(bc, 40, 40, 20, color)
-    bc.create_text(20, 20, text="X", font=("Arial", 20, "bold"), fill="#166C99")
-
-draw_btn("#C8EDF7")
-bc.bind("<Enter>",    lambda e: draw_btn("#a8d8f0"))
-bc.bind("<Leave>",    lambda e: draw_btn("#C8EDF7"))
-bc.bind("<Button-1>", lambda e: [draw_btn("#7bbedd"), root.after(150, lambda: draw_btn("#a8d8f0"))])
+bc.bind("<Button-1>", lambda e: [draw_play_btn("#7bbedd"), root.after(150, go_to_instructions)])
 
 # Exit the quiz button
-bc = tk.Canvas(root, width=40, height=40, bg="#ffffff", highlightthickness=0, cursor="hand2")
-bc.place(relx=0.05, rely=0.1, anchor="center")
+xc = tk.Canvas(root, width=40, height=40, bg="#ffffff", highlightthickness=0, cursor="hand2")
+xc.place(relx=0.05, rely=0.1, anchor="center")
 
-def draw_btn(color):
-    bc.delete("all")
-    rounded(bc, 40, 40, 20, color)
-    bc.create_text(20, 20, text="X", font=("Arial", 20, "bold"), fill="#166C99")
+def draw_x_btn(color):
+    xc.delete("all")
+    rounded(xc, 40, 40, 20, color)
+    xc.create_text(20, 20, text="X", font=("Arial", 20, "bold"), fill="#166C99")
 
-draw_btn("#C8EDF7")
-bc.bind("<Enter>",    lambda e: draw_btn("#a8d8f0"))
-bc.bind("<Leave>",    lambda e: draw_btn("#C8EDF7"))
-bc.bind("<Button-1>", lambda e: [
-    draw_btn("#7bbedd"),
-    root.after(150, lambda: [draw_btn("#a8d8f0"), root.destroy()])
+draw_x_btn("#C8EDF7")
+xc.bind("<Enter>",    lambda e: draw_x_btn("#a8d8f0"))
+xc.bind("<Leave>",    lambda e: draw_x_btn("#C8EDF7"))
+xc.bind("<Button-1>", lambda e: [
+    draw_x_btn("#7bbedd"),
+    root.after(150, lambda: [draw_x_btn("#a8d8f0"), root.destroy()])
 ])
 
 # Loop program

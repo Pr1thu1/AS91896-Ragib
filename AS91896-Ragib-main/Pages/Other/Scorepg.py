@@ -31,12 +31,15 @@ blue = "#1a6fa0"
 blue_dark = "#155d87"
 blue_click = "#0f4566"
 
-# Option 1
-btn1 = tk.Label(root, text="  ", font=("Comic Sans MS", 26), fg="white", bg=blue, width=10, height=2, anchor="w", cursor="hand2", bd=0, relief="flat")
-btn1.place(relx=0.50, rely=0.60, anchor="center")
-btn1.bind("<Enter>", lambda e: btn1.config(bg=blue_dark))
-btn1.bind("<Leave>", lambda e: btn1.config(bg=blue))
-btn1.bind("<Button-1>", lambda e: btn1.config(bg=blue_click))
+# Read the final score from file
+with open("../../score.txt", "r") as f:
+    final_score = f.read().strip()
+
+# Show the score on screen
+tk.Label(root, text=final_score + " / 15", font=("Arial", 60, "bold"),
+         fg="#1a5276", bg="#ffffff").place(relx=0.5, rely=0.60, anchor="center")
+
+
 
 # Loop program
 root.mainloop()

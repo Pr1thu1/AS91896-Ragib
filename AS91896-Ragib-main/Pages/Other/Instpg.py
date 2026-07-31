@@ -35,7 +35,6 @@ elif platform.system() == "Windows":
 else:
     font = "DejaVu Sans"
 
-
 # Drawing rounded rectangles for the entry box and button
 def rounded(canvas, w, h, r, color):
     for x1, y1, x2, y2, start in [(0, 0, r*2, r*2, 90), (w-r*2, 0, w, r*2, 0),
@@ -44,7 +43,7 @@ def rounded(canvas, w, h, r, color):
     canvas.create_rectangle(r, 0, w-r, h, fill=color, outline=color)
     canvas.create_rectangle(0, r, w, h-r, fill=color, outline=color)
 
-# Play button with hover and click effects
+# Start button - opens Q1
 bc = tk.Canvas(root, width=120, height=60, bg="#C8EDF7", highlightthickness=0, cursor="hand2")
 bc.place(relx=0.5, rely=0.93, anchor="center")
 
@@ -56,25 +55,31 @@ def draw_btn(color):
 draw_btn("#C8EDF7")
 bc.bind("<Enter>",    lambda e: draw_btn("#a8d8f0"))
 bc.bind("<Leave>",    lambda e: draw_btn("#C8EDF7"))
-bc.bind("<Button-1>", lambda e: [draw_btn("#7bbedd"), root.after(150, lambda: draw_btn("#a8d8f0"))])
+
+def go_to_q1():
+    draw_btn("#a8d8f0")
+    import subprocess, sys, os
+    subprocess.Popen([sys.executable, os.path.join(os.path.dirname(os.path.dirname(__file__)), "Ques", "Q1.py")])
+    root.destroy()
+
+bc.bind("<Button-1>", lambda e: [draw_btn("#7bbedd"), root.after(150, go_to_q1)])
 
 # Exit the quiz button
-bc = tk.Canvas(root, width=40, height=40, bg="#C9EDF7", highlightthickness=0, cursor="hand2")
-bc.place(relx=0.05, rely=0.1, anchor="center")
+xc = tk.Canvas(root, width=40, height=40, bg="#C9EDF7", highlightthickness=0, cursor="hand2")
+xc.place(relx=0.05, rely=0.1, anchor="center")
 
-def draw_btn(color):
-    bc.delete("all")
-    rounded(bc, 40, 40, 20, color)
-    bc.create_text(20, 20, text="X", font=("Arial", 20, "bold"), fill="#166C99")
+def draw_x_btn(color):
+    xc.delete("all")
+    rounded(xc, 40, 40, 20, color)
+    xc.create_text(20, 20, text="X", font=("Arial", 20, "bold"), fill="#166C99")
 
-draw_btn("#C8EDF7")
-bc.bind("<Enter>",    lambda e: draw_btn("#a8d8f0"))
-bc.bind("<Leave>",    lambda e: draw_btn("#C8EDF7"))
-bc.bind("<Button-1>", lambda e: [
-    draw_btn("#7bbedd"),
-    root.after(150, lambda: [draw_btn("#a8d8f0"), root.destroy()])
+draw_x_btn("#C8EDF7")
+xc.bind("<Enter>",    lambda e: draw_x_btn("#a8d8f0"))
+xc.bind("<Leave>",    lambda e: draw_x_btn("#C8EDF7"))
+xc.bind("<Button-1>", lambda e: [
+    draw_x_btn("#7bbedd"),
+    root.after(150, lambda: [draw_x_btn("#a8d8f0"), root.destroy()])
 ])
-
 
 # Loop program
 root.mainloop()
